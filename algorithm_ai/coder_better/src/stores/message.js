@@ -8,5 +8,13 @@ export const useMessageStore = defineStore('message', () => {
     message.value = msg
   }
 
-  return { message, setMessage }
+  const output = ref('')
+
+  function setOutput(msg) {
+    output.value = msg
+  }
+
+  return { message, setMessage, output, setOutput }
+},{
+  persist: true,
 })

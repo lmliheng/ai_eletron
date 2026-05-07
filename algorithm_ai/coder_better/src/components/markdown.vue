@@ -1,12 +1,12 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, watch, ref, defineExpose } from 'vue'
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import 'prismjs/themes/prism.css';
 
 
-
+let editor = null;
 const code = `\`\`\`javascript
 function debounce(fn, delay) {
     let timer = null;
@@ -23,9 +23,12 @@ function debounce(fn, delay) {
 \`\`\`
 `;
 
+
+
+
 onMounted(() => {
     // 基础配置
-    const editor = new Editor({
+    editor = new Editor({
         el: document.querySelector('#editor-container'),
         height: '80%',  
         plugins: [codeSyntaxHighlight],
@@ -46,8 +49,17 @@ onMounted(() => {
     'go',
   ],
     });
-
 });
+
+
+const getMarkdown = () => {
+    return editor?.getMarkdown();
+}
+
+defineExpose({
+    getMarkdown
+})
+
 
 </script>
 
